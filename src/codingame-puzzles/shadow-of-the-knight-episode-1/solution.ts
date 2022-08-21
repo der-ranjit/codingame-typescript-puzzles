@@ -1,4 +1,4 @@
-import { CGDirection } from "../../utilities.ts/CGDirection";
+import { CGDirection, isCGDirection } from "../../utilities.ts/CGDirection";
 import { Vector2 } from "../../utilities.ts/Vector2";
 import { GameInput, Puzzle } from "../puzzle.abstract";
 
@@ -12,6 +12,7 @@ interface ShadowKnightEp1GameInput extends GameInput {
 
 export class ShadowKnightEp1 extends Puzzle<ShadowKnightEp1GameInput> {
     private batmanPosition = new Vector2(this.gameInput.initialPositionX, this.gameInput.initialPositionY);
+    private availableJumps = this.gameInput.availableJumps;
 
     protected initializeGameInput(): ShadowKnightEp1GameInput {
         const buildingInput = readline().split(' ');
@@ -30,12 +31,20 @@ export class ShadowKnightEp1 extends Puzzle<ShadowKnightEp1GameInput> {
         }
     }
     
-    protected handleCGInputAndOutputSolution(): void {
+    protected handleCGInputAndOutputSolution(): string {
         // the direction of the bombs from batman's current location (U, UR, R, DR, D, DL, L or UL)
+        const bombDirection = readline();
+        this.simulator?.log(bombDirection)
+        if (!isCGDirection(bombDirection)) {
+            throw new Error("erronous bomb direction provided")
+        }
+        const resultWindowPosition = this.determineBestWindowPosition(bombDirection);
+        this.availableJumps--;
+        return resultWindowPosition.toString();
+    }
+    
+    private determineBestWindowPosition(bombDirection: CGDirection): Vector2 {
         const targetWindowPosition = new Vector2(0, 0);
-        const bombDirection = readline() as CGDirection;
-        const bombVector = Vector2.fromCGDirection(bombDirection);
-        
-        console.log(targetWindowPosition);
+        return targetWindowPosition;
     }
 }
