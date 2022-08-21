@@ -4,7 +4,8 @@
   "description": "Minimal typescript/webpack starter project that bundles to a single output file. Can be used with GC Local for local development of codingame puzzles",
   "main": "dist/main.js",
   "scripts": {
-    "start": "webpack --watch"
+    "start": "webpack --watch",
+    "simulate": "webpack && node dist/main.js"
   },
   "author": "Ranjit Mevius",
   "license": "ISC",
