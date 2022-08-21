@@ -67,26 +67,24 @@ export class ShadowKnightEp1Solution extends PuzzleSolver<ShadowKnightEp1GameInp
 
     private determineNextTarget(bombDirection: CGDirection): Vector2 {
         const bombPosition = Vector2.from(bombDirection).getPosition();
-        this.markInvalidTargets(bombPosition);
+        this.filterInvalidTargets(bombPosition);
         const targetPosition = this.getRandomValidTarget()?.position ?? {x: 0, y: 0};
         return new Vector2(targetPosition);
     }
 
-    private markInvalidTargets(bombDirection: Vector2Like): void {
-        for (let target of this.targets) {
-            if (bombDirection.x < 0 && target.position.x > this.currentPosition.getX()
-                || bombDirection.x > 0 && target.position.x < this.currentPosition.getX()
+    private filterInvalidTargets(bombDirection: Vector2Like): void {
+        this.targets = this.targets.filter(target =>{
+            const isInvalid = bombDirection.x < 0 && target.position.x >= this.currentPosition.getX()
+                || bombDirection.x > 0 && target.position.x <= this.currentPosition.getX()
                 || bombDirection.x === 0 && target.position.x != this.currentPosition.getX()
-                || bombDirection.y < 0 && target.position.y > this.currentPosition.getY()
-                || bombDirection.y > 0 && target.position.y < this.currentPosition.getY()
-                || bombDirection.y === 0 && target.position.y != this.currentPosition.getY()
-            ) {
-                target.isValid = false;
-            }
-        }
+                || bombDirection.y < 0 && target.position.y >= this.currentPosition.getY()
+                || bombDirection.y > 0 && target.position.y <= this.currentPosition.getY()
+                || bombDirection.y === 0 && target.position.y != this.currentPosition.getY();
+            return !isInvalid;
+        });
     }
 
     private getRandomValidTarget(): Target | null {
-        return getRandomItemInArray(this.targets.filter(target => target.isValid));
+        return getRandomItemInArray(this.targets);
     }
 }
