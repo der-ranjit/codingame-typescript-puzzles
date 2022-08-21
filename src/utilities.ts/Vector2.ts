@@ -141,4 +141,8 @@ export class Vector2 {
         this.x = otherVector instanceof Vector2 ? otherVector.getX() : otherVector.x;
         this.y = otherVector instanceof Vector2 ? otherVector.getY() : otherVector.y;
     }
+
+    public toString(): string {
+        return `${this.x} ${this.y}`;
+    }
 }

@@ -1,5 +1,5 @@
 export interface GameInput {
-    [key: string]: any;
+    readonly [key: string]: any;
 }
 
 export abstract class Puzzle<T extends GameInput> {
