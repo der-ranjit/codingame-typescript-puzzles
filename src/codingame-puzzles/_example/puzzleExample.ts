@@ -1,22 +1,21 @@
-import { GameInput, Puzzle } from "../puzzle.abstract";
+import { GameInput, PuzzleSolver } from "../PuzzleSolver";
 
 interface ExampleGameInput extends GameInput {
     readonly startValue: string;
 }
 
-export class PuzzleExample extends Puzzle<ExampleGameInput> {
+export class PuzzleExample extends PuzzleSolver<ExampleGameInput> {
     protected initializeGameInput(): ExampleGameInput {
         const startValue = readline();
         return {
             startValue
         };
     }
-    
-    protected handleCGInputAndOutputSolution(): string {
+
+    public handleNextInputAndReturnSolution(): string {
         // some input
         const input = readline();
 
-        // output is always needed
-        return "output";
+        return "solution";
     }
 }

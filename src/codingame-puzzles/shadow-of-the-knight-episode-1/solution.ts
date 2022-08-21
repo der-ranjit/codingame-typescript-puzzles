@@ -1,17 +1,18 @@
 import { CGDirection, isCGDirection } from "../../utilities.ts/CGDirection";
 import { Vector2 } from "../../utilities.ts/Vector2";
-import { GameInput, Puzzle } from "../puzzle.abstract";
+import { PuzzleManager } from "../PuzzleManager";
+import { GameInput, PuzzleSolver } from "../PuzzleSolver";
 
 interface ShadowKnightEp1GameInput extends GameInput {
     readonly buildingWidth: number;
     readonly buildingHeight: number,
     readonly availableJumps: number;
-    readonly initialPositionX: number; 
-    readonly initialPositionY: number; 
+    readonly initialPositionX: number;
+    readonly initialPositionY: number;
 }
 
-export class ShadowKnightEp1 extends Puzzle<ShadowKnightEp1GameInput> {
-    private batmanPosition = new Vector2(this.gameInput.initialPositionX, this.gameInput.initialPositionY);
+export class ShadowKnightEp1Solution extends PuzzleSolver<ShadowKnightEp1GameInput> {
+    private position = new Vector2(this.gameInput.initialPositionX, this.gameInput.initialPositionY);
     private availableJumps = this.gameInput.availableJumps;
 
     protected initializeGameInput(): ShadowKnightEp1GameInput {
@@ -30,19 +31,20 @@ export class ShadowKnightEp1 extends Puzzle<ShadowKnightEp1GameInput> {
             initialPositionY
         }
     }
-    
-    protected handleCGInputAndOutputSolution(): string {
+
+    public handleNextInputAndReturnSolution(): string {
         // the direction of the bombs from batman's current location (U, UR, R, DR, D, DL, L or UL)
         const bombDirection = readline();
-        this.simulator?.log("bomb direction: " + bombDirection);
+        PuzzleManager.log("bomb direction: " + bombDirection);
         if (!isCGDirection(bombDirection)) {
             throw new Error("erronous bomb direction provided")
         }
         const resultWindowPosition = this.determineBestWindowPosition(bombDirection);
         this.availableJumps--;
+        this.position = resultWindowPosition;
         return resultWindowPosition.toString();
     }
-    
+
     private determineBestWindowPosition(bombDirection: CGDirection): Vector2 {
         const targetWindowPosition = new Vector2(0, 0);
         return targetWindowPosition;

@@ -1,5 +1,6 @@
-import { CGDirection } from "./CGDirection";
-import { CodingameInput } from "./IOSimulator";
+import { CGDirection, cgDirectionToVectorLike } from "./CGDirection";
+import { CGInput } from "./CGInputOutput";
+import { isEnumValue } from "./enums";
 
 export interface Vector2Like {
     x: number;
@@ -10,63 +11,25 @@ function isVector2Like(value: any): value is Vector2Like {
     return typeof value?.x === "number" && typeof value?.y === "number";
 }
 
+function isVectorLikeCompatibleInput(value: any): value is string {
+    return typeof value === "string"
+        && value.length === 3
+        && !isNaN(parseInt(value[0]))
+        && !isNaN(parseInt(value[2]))
+}
+
 export class Vector2 {
-    public static from(vectorLike: Vector2Like) {
-        return new Vector2(vectorLike);
-    }
-
-    public static fromCGInput(input: CodingameInput): Vector2 {
-        if (typeof input !== "string" || input.length !== 3) {
-            throw new Error("Vector2.fromCGInput: unexpected input");
-        }
-
-        return new Vector2(parseInt(input[0]), parseInt(input[2]));
-    }
-
-    public static fromCGDirection(direction: CGDirection): Vector2 {
-        let x: number;
-        let y: number;
-
-        switch (direction) {
-            case CGDirection.Up:
-                x = 0;
-                y = -1;
-                break;
-            case CGDirection.UpRight:
-                x = 1;
-                y = -1;
-                break;
-            case CGDirection.Right:
-                x = 1;
-                y = 0;
-                break;
-            case CGDirection.DownRight:
-                x = 1;
-                y = 1;
-                break;
-            case CGDirection.Down:
-                x = 0;
-                y = 1;
-                break;
-            case CGDirection.DownLeft:
-                x = -1;
-                y = 1;
-                break;
-            case CGDirection.Left:
-                x = -1;
-                y = 0;
-                break;
-            case CGDirection.UpLeft:
-                x = -1;
-                y = -1;
-                break;
-            default:
-                x = 0;
-                y = 0;
-                break;
-        }
-
-        return new Vector2(x, y);
+    public static from(vectorLike: Vector2Like): Vector2
+    public static from(input: CGInput): Vector2
+    public static from(direction: CGDirection): Vector2
+    public static from(value: Vector2Like | CGInput | CGDirection): Vector2 {
+        if (isVector2Like(value)) {
+            return new Vector2(value);
+        } else if (isEnumValue(value, CGDirection)) {
+            return Vector2.from(cgDirectionToVectorLike(value));
+        } else if (isVectorLikeCompatibleInput(value)) {
+            return new Vector2(parseInt(value[0]), parseInt(value[2]));
+        } else return new Vector2(0, 0);
     }
 
     public static directional(vectorA: Vector2 | Vector2Like, vectorB: Vector2 | Vector2Like): Vector2 {
@@ -88,24 +51,24 @@ export class Vector2 {
         }
         return Math.sqrt(((vectorA.x - vectorB.x) ** 2) + ((vectorA.y - vectorB.y) ** 2));
     }
-    
+
     public static add(vectorA: Vector2 | Vector2Like, vectorB: Vector2 | Vector2Like): Vector2 {
         if (vectorA instanceof Vector2) {
             vectorA = vectorA.getPosition();
-        } 
+        }
         if (vectorB instanceof Vector2) {
             vectorB = vectorB.getPosition()
-        } 
+        }
         return new Vector2(vectorA.x + vectorB.x, vectorA.y + vectorB.y);
     }
-    
+
     public static sub(vectorA: Vector2 | Vector2Like, vectorB: Vector2 | Vector2Like): Vector2 {
         if (vectorA instanceof Vector2) {
             vectorA = vectorA.getPosition();
-        } 
+        }
         if (vectorB instanceof Vector2) {
             vectorB = vectorB.getPosition()
-        } 
+        }
         return new Vector2(vectorA.x - vectorB.x, vectorA.y - vectorB.y);
     }
 
@@ -129,7 +92,7 @@ export class Vector2 {
     public getX(): number {
         return this.x
     }
-    
+
     public getY(): number {
         return this.y
     }
@@ -148,11 +111,11 @@ export class Vector2 {
     public add(otherVector: Vector2Like | Vector2) {
         this.from(Vector2.add(this, otherVector));
     }
-    
+
     public sub(otherVector: Vector2Like | Vector2) {
         this.from(Vector2.sub(this, otherVector));
     }
-    
+
     public scale(scalar: number) {
         this.from(Vector2.scale(this, scalar));
     }

@@ -1,24 +1,26 @@
-import { CGDirection } from "../../utilities.ts/CGDirection";
-import { CodingameInput, IOSimulatorArgs } from "../../utilities.ts/IOSimulator";
+import { CGDirection, vectorLikeToCGDirection } from "../../utilities.ts/CGDirection";
+import { CGInput } from "../../utilities.ts/CGInputOutput";
+import { PuzzleSimulationArgs } from "../PuzzleSimulation";
 import { Vector2 } from "../../utilities.ts/Vector2";
 
+// initial inputs provided to puzzle for simulation
 const widthAndHeight = new Vector2(4, 8);
 let availableJumps = 40;
 let playerPosition = new Vector2(2, 3);
 const bombPosition = new Vector2(1, 5);
 
-export const shadowOfKnightEp1SimulationArgs: IOSimulatorArgs = {
+export const shadowOfKnightEp1SimulationArgs: PuzzleSimulationArgs = {
+    simulationsPerSecond: 2,
+    outputCalculator: createNextOutput,
     initialOutputs: [
         widthAndHeight.toString(),
         availableJumps,
         playerPosition.toString()
     ],
-    outputComputer: createNextDirection,
-    simulationsPerSecond: 2
 };
 
 /** Output the direction of the bomb relative to the player position */
-function createNextDirection(targetWindow: CodingameInput | null): CGDirection {
+function createNextOutput(targetWindow: CGInput | null): CGDirection {
     if (targetWindow === bombPosition.toString()) {
         winGame();
     } else if (targetWindow != null) {
@@ -32,8 +34,8 @@ function winGame() {
     throw new Error("YOU WON");
 }
 
-function movePlayerToTargetWindow(targetWindow: CodingameInput) {
-    playerPosition = Vector2.fromCGInput(targetWindow);
+function movePlayerToTargetWindow(targetWindow: CGInput) {
+    playerPosition = Vector2.from(targetWindow);
     availableJumps--;
     if (availableJumps <= 0) {
         throw new Error("NO MORE JUMPS AVAILABLE LOOSER")
@@ -42,18 +44,5 @@ function movePlayerToTargetWindow(targetWindow: CodingameInput) {
 
 function getBombDirectionRelativeToPlayer(): CGDirection {
     const directionToBomb = Vector2.directional(playerPosition, bombPosition);
-    return vectorToCGDirection(directionToBomb);
-}
-
-function vectorToCGDirection(vector: Vector2): CGDirection {
-    const position = vector.getPosition();
-    if (position.x === 0 && position.y < 0) return CGDirection.Up;
-    if (position.x > 0 && position.y < 0) return CGDirection.UpRight;
-    if (position.x > 0 && position.y === 0) return CGDirection.Right;
-    if (position.x > 0 && position.y > 0) return CGDirection.DownRight;
-    if (position.x === 0 && position.y > 0) return CGDirection.Down;
-    if (position.x < 0 && position.y > 0) return CGDirection.DownLeft;
-    if (position.x < 0 && position.y === 0) return CGDirection.Left;
-    if (position.x < 0 && position.y < 0) return CGDirection.UpLeft;
-    return CGDirection.Right; 
+    return vectorLikeToCGDirection(directionToBomb.getPosition());
 }
