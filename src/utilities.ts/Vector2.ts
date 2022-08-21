@@ -61,47 +61,23 @@ export class Vector2 {
     }
 
     public static distanceBetween(vectorA: Vector2 | Vector2Like, vectorB: Vector2 | Vector2Like): number {
-        let xA: number;
-        let yA: number;
-        let xB: number;
-        let yB: number;
         if (vectorA instanceof Vector2) {
-            xA = vectorA.getX();
-            yA = vectorA.getY();
-        } else {
-            xA = vectorA.x;
-            yA = vectorA.y;
+            vectorA = vectorA.getPosition();
         }
         if (vectorB instanceof Vector2) {
-            xB = vectorB.getX();
-            yB = vectorB.getY();
-        } else {
-            xB = vectorB.x;
-            yB = vectorB.y;
+            vectorB = vectorB.getPosition()
         }
-        return Math.sqrt(((xA - xB) ** 2) + ((yA - yB) ** 2));
+        return Math.sqrt(((vectorA.x - vectorB.x) ** 2) + ((vectorA.y - vectorB.y) ** 2));
     }
     
     public static add(vectorA: Vector2 | Vector2Like, vectorB: Vector2 | Vector2Like): Vector2 {
-        let xA: number;
-        let yA: number;
-        let xB: number;
-        let yB: number;
         if (vectorA instanceof Vector2) {
-            xA = vectorA.getX();
-            yA = vectorA.getY();
-        } else {
-            xA = vectorA.x;
-            yA = vectorA.y;
-        }
+            vectorA = vectorA.getPosition();
+        } 
         if (vectorB instanceof Vector2) {
-            xB = vectorB.getX();
-            yB = vectorB.getY();
-        } else {
-            xB = vectorB.x;
-            yB = vectorB.y;
-        }
-        return new Vector2(xA + xB, yA + yB);
+            vectorB = vectorB.getPosition()
+        } 
+        return new Vector2(vectorA.x + vectorB.x, vectorA.y + vectorB.y);
     }
 
     private x: number;
