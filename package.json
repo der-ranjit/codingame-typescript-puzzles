@@ -5,7 +5,7 @@
   "main": "dist/main.js",
   "scripts": {
     "start": "webpack --watch",
-    "simulate": "webpack && node dist/main.js"
+    "simulation": "set PUZZLESIMULATION=true && webpack && node dist/main.js"
   },
   "author": "Ranjit Mevius",
   "license": "ISC",
