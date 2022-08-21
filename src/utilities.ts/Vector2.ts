@@ -1,4 +1,5 @@
 import { CGDirection } from "./CGDirection";
+import { CodingameInput } from "./IOSimulator";
 
 export interface Vector2Like {
     x: number;
@@ -12,6 +13,14 @@ function isVector2Like(value: any): value is Vector2Like {
 export class Vector2 {
     public static from(vectorLike: Vector2Like) {
         return new Vector2(vectorLike);
+    }
+
+    public static fromCGInput(input: CodingameInput): Vector2 {
+        if (typeof input !== "string" || input.length !== 3) {
+            throw new Error("Vector2.fromCGInput: unexpected input");
+        }
+
+        return new Vector2(parseInt(input[0]), parseInt(input[2]));
     }
 
     public static fromCGDirection(direction: CGDirection): Vector2 {
