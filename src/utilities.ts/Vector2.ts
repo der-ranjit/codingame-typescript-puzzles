@@ -69,6 +69,16 @@ export class Vector2 {
         return new Vector2(x, y);
     }
 
+    public static directional(vectorA: Vector2 | Vector2Like, vectorB: Vector2 | Vector2Like): Vector2 {
+        if (vectorA instanceof Vector2) {
+            vectorA = vectorA.getPosition();
+        }
+        if (vectorB instanceof Vector2) {
+            vectorB = vectorB.getPosition()
+        }
+        return new Vector2(vectorB.x - vectorA.x, vectorB.y - vectorA.y);
+    }
+
     public static distanceBetween(vectorA: Vector2 | Vector2Like, vectorB: Vector2 | Vector2Like): number {
         if (vectorA instanceof Vector2) {
             vectorA = vectorA.getPosition();
@@ -87,6 +97,23 @@ export class Vector2 {
             vectorB = vectorB.getPosition()
         } 
         return new Vector2(vectorA.x + vectorB.x, vectorA.y + vectorB.y);
+    }
+    
+    public static sub(vectorA: Vector2 | Vector2Like, vectorB: Vector2 | Vector2Like): Vector2 {
+        if (vectorA instanceof Vector2) {
+            vectorA = vectorA.getPosition();
+        } 
+        if (vectorB instanceof Vector2) {
+            vectorB = vectorB.getPosition()
+        } 
+        return new Vector2(vectorA.x - vectorB.x, vectorA.y - vectorB.y);
+    }
+
+    public static scale(vectorA: Vector2 | Vector2Like, scalar: number): Vector2 {
+        if (vectorA instanceof Vector2) {
+            vectorA = vectorA.getPosition();
+        }
+        return new Vector2(vectorA.x * scalar, vectorA.y * scalar);
     }
 
     private x: number;
@@ -119,15 +146,23 @@ export class Vector2 {
     }
 
     public add(otherVector: Vector2Like | Vector2) {
-        this.copy(Vector2.add(this, otherVector));
+        this.from(Vector2.add(this, otherVector));
     }
-
-    public copy(otherVector: Vector2Like | Vector2) {
-        this.x = otherVector instanceof Vector2 ? otherVector.getX() : otherVector.x;
-        this.y = otherVector instanceof Vector2 ? otherVector.getY() : otherVector.y;
+    
+    public sub(otherVector: Vector2Like | Vector2) {
+        this.from(Vector2.sub(this, otherVector));
+    }
+    
+    public scale(scalar: number) {
+        this.from(Vector2.scale(this, scalar));
     }
 
     public toString(): string {
         return `${this.x} ${this.y}`;
+    }
+
+    private from(otherVector: Vector2Like | Vector2) {
+        this.x = otherVector instanceof Vector2 ? otherVector.getX() : otherVector.x;
+        this.y = otherVector instanceof Vector2 ? otherVector.getY() : otherVector.y;
     }
 }
