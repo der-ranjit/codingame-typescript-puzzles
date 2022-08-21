@@ -34,7 +34,7 @@ export class ShadowKnightEp1 extends Puzzle<ShadowKnightEp1GameInput> {
     protected handleCGInputAndOutputSolution(): string {
         // the direction of the bombs from batman's current location (U, UR, R, DR, D, DL, L or UL)
         const bombDirection = readline();
-        this.simulator?.log(bombDirection)
+        this.simulator?.log("bomb direction: " + bombDirection);
         if (!isCGDirection(bombDirection)) {
             throw new Error("erronous bomb direction provided")
         }
