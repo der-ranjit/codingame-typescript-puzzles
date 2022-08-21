@@ -5,6 +5,7 @@ module.exports = {
         main: './src/main.ts',
     },
     mode: "development",
+    devtool: false,
     module: {
         rules: [
             {
