@@ -1,7 +1,7 @@
-type CodingameInput = number | string | boolean;
-type CodingameOutput = string;
+export type CodingameInput = number | string | boolean;
+export type CodingameOutput = string;
 type SequentialOutputs = CodingameInput[];
-type OutputComputer = (input: CodingameInput | null) => CodingameOutput;
+type OutputComputer = (lastSolution: CodingameInput | null) => CodingameOutput;
 
 export interface IOSimulatorArgs {
     /** An array of values that will initially be provided by the simulation on calls of readline */
