@@ -31,7 +31,7 @@ export class PuzzleManager {
         const puzzleSolver = new puzzleSolverType();
         while (true) {
             // codingame expects a console.log as output for a solution 
-            console.log(puzzleSolver.handleNextInputAndReturnSolution());
+            console.log(puzzleSolver.getNextSolution());
         }
     }
 
@@ -46,9 +46,10 @@ export class PuzzleManager {
 
         // relay readline to simulator
         global.readline = () => simulation.getNextOutput();
+        // create puzzleSolver only after readline has been relayed, since constructing a solver will also parse initial game input
         const puzzleSolver = new puzzleSolverType();
         while (true) {
-            const solution = puzzleSolver.handleNextInputAndReturnSolution();
+            const solution = puzzleSolver.getNextSolution();
             simulation.setSolution(solution);
             console.log(solution);
             await sleep(simulation.getSimulationSpeed());

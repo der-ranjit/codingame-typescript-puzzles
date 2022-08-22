@@ -1,8 +1,8 @@
 import { CGDirection, isCGDirection } from "../../utilities.ts/CGDirection";
 import { Vector2, Vector2Like } from "../../utilities.ts/Vector2";
-import { InitialGameInput, PuzzleSolver } from "../PuzzleSolver";
+import { InitialGameInput, PuzzleSolver, StepwiseGameInput } from "../PuzzleSolver";
 
-interface ShadowKnightEp1InitialGameInput extends InitialGameInput {
+interface ShadowKnightEp1InitiaInput extends InitialGameInput {
     readonly buildingWidth: number;
     readonly buildingHeight: number,
     readonly availableJumps: number;
@@ -10,15 +10,19 @@ interface ShadowKnightEp1InitialGameInput extends InitialGameInput {
     readonly initialPositionY: number;
 }
 
-export class ShadowKnightEp1Solution extends PuzzleSolver<ShadowKnightEp1InitialGameInput> {
-    private currentPosition = new Vector2(this.gameInput.initialPositionX, this.gameInput.initialPositionY);
+interface ShadowKnightEp1StepwiseInput extends StepwiseGameInput {
+    bombDirection: CGDirection;
+}
+
+export class ShadowKnightEp1Solution extends PuzzleSolver<ShadowKnightEp1InitiaInput, ShadowKnightEp1StepwiseInput> {
+    private currentPosition = new Vector2(this.initialInput.initialPositionX, this.initialInput.initialPositionY);
 
     private minX = 0;
-    private maxX = this.gameInput.buildingWidth - 1;
+    private maxX = this.initialInput.buildingWidth - 1;
     private minY = 0;
-    private maxY = this.gameInput.buildingHeight - 1;
+    private maxY = this.initialInput.buildingHeight - 1;
 
-    protected initializeGameInput(): ShadowKnightEp1InitialGameInput {
+    protected parseInitialGameInput(): ShadowKnightEp1InitiaInput {
         const [buildingWidth, buildingHeight] = [...readline().split(' ').map(value => +value)];
         const availableJumps = parseInt(readline());
         const [initialPositionX, initialPositionY] = [...readline().split(' ').map(value => +value)];
@@ -31,13 +35,15 @@ export class ShadowKnightEp1Solution extends PuzzleSolver<ShadowKnightEp1Initial
         }
     }
 
-    public handleNextInputAndReturnSolution(): string {
-        const bombCGDirection = readline();
-        if (!isCGDirection(bombCGDirection)) {
+    protected parseStepwiseGameInput(stepwiseCGInput: string): ShadowKnightEp1StepwiseInput {
+        if (!isCGDirection(stepwiseCGInput)) {
             throw new Error("malformed input")
         }
+        return { bombDirection: stepwiseCGInput }
+    }
 
-        this.jump(bombCGDirection);
+    protected getSolutionForNextStep(stepwiseInput: ShadowKnightEp1StepwiseInput): string {
+        this.jump(stepwiseInput.bombDirection);
         return this.currentPosition.toString();
     }
 

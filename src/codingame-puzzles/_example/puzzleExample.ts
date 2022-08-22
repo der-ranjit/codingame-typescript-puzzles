@@ -1,21 +1,27 @@
-import { InitialGameInput, PuzzleSolver } from "../PuzzleSolver";
+import { CGInputOutput } from "../../utilities.ts/CGInputOutput";
+import { Vector2 } from "../../utilities.ts/Vector2";
+import { InitialGameInput, PuzzleSolver, StepwiseGameInput } from "../PuzzleSolver";
 
-interface ExampleGameInput extends InitialGameInput {
+interface ExampleInitialInput extends InitialGameInput {
     readonly startValue: string;
 }
+interface ExampleStepwiseInput extends StepwiseGameInput {
+    readonly vector: Vector2;
+}
 
-export class PuzzleExample extends PuzzleSolver<ExampleGameInput> {
-    protected initializeGameInput(): ExampleGameInput {
+export class PuzzleExample extends PuzzleSolver<ExampleInitialInput, ExampleStepwiseInput> {
+    protected parseInitialGameInput(): ExampleInitialInput {
         const startValue = readline();
-        return {
-            startValue
-        };
+        return { startValue };
     }
 
-    public handleNextInputAndReturnSolution(): string {
-        // some input
-        const input = readline();
+    protected parseStepwiseGameInput(stepwiseCGInput: CGInputOutput): ExampleStepwiseInput {
+        return { vector: Vector2.from(stepwiseCGInput) };
+    }
 
-        return "solution";
+    public getSolutionForNextStep(stepwiseInput: ExampleStepwiseInput): string {
+        // some input and heavy computation
+        const solution = stepwiseInput.vector.getX()
+        return solution.toString();
     }
 }

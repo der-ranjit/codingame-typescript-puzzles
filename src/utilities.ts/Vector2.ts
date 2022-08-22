@@ -29,7 +29,9 @@ export class Vector2 {
             return Vector2.from(cgDirectionToVectorLike(value));
         } else if (isVectorLikeCompatibleInput(value)) {
             return new Vector2(parseInt(value[0]), parseInt(value[2]));
-        } else return new Vector2(0, 0);
+        } else {
+            throw new Error("[Vector2.from]: Could not convert " + value + " to Vector2")
+        };
     }
 
     public static directional(vectorA: Vector2 | Vector2Like, vectorB: Vector2 | Vector2Like): Vector2 {
