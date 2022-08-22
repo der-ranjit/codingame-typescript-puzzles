@@ -21,7 +21,7 @@ export function vectorLikeToCGDirection(vectorLike: Vector2Like): CGDirection {
     if (vectorLike.x < 0 && vectorLike.y > 0) { return CGDirection.DownLeft; }
     if (vectorLike.x < 0 && vectorLike.y === 0) { return CGDirection.Left; }
     if (vectorLike.x < 0 && vectorLike.y < 0) { return CGDirection.UpLeft; }
-    throw new Error("cannot convert vectorLike to CGDirection");
+    throw new Error("vectorLike could not be converted to CGDirection");
 }
 
 export function cgDirectionToVectorLike(direction: CGDirection): Vector2Like {

@@ -1,3 +1,4 @@
+import { assert } from "../../utilities.ts/asserts";
 import { CGDirection, isCGDirection } from "../../utilities.ts/CGDirection";
 import { Vector2, Vector2Like } from "../../utilities.ts/Vector2";
 import { PuzzleManager } from "../PuzzleManager";
@@ -30,9 +31,7 @@ export class ShadowOfKnight1Solver extends PuzzleSolver<ShadowKnightEp1InitiaInp
     }
 
     protected parseStepwiseGameInput(stepwiseCGInput: string): ShadowKnightEp1StepwiseInput {
-        if (!isCGDirection(stepwiseCGInput)) {
-            throw new Error("malformed input")
-        }
+        assert(isCGDirection(stepwiseCGInput), "input cannot be converted to CGDirection");
         return { bombDirection: stepwiseCGInput }
     }
 
