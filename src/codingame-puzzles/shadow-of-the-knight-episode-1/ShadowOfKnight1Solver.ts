@@ -1,5 +1,6 @@
 import { CGDirection, isCGDirection } from "../../utilities.ts/CGDirection";
 import { Vector2, Vector2Like } from "../../utilities.ts/Vector2";
+import { PuzzleManager } from "../PuzzleManager";
 import { InitialGameInput, PuzzleSolver, StepwiseGameInput } from "../PuzzleSolver";
 
 interface ShadowKnightEp1InitiaInput extends InitialGameInput {
@@ -43,6 +44,7 @@ export class ShadowOfKnight1Solver extends PuzzleSolver<ShadowKnightEp1InitiaInp
     }
 
     protected getSolutionForNextStep(stepwiseInput: ShadowKnightEp1StepwiseInput): string {
+        PuzzleManager.log("bombDirection: " + stepwiseInput.bombDirection);
         this.jump(stepwiseInput.bombDirection);
         return this.currentPosition.toString();
     }
