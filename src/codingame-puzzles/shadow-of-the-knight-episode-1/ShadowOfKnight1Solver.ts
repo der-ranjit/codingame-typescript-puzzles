@@ -16,13 +16,6 @@ interface ShadowKnightEp1StepwiseInput extends StepwiseGameInput {
 }
 
 export class ShadowOfKnight1Solver extends PuzzleSolver<ShadowKnightEp1InitiaInput, ShadowKnightEp1StepwiseInput> {
-    private currentPosition = new Vector2(this.initialInput.initialPositionX, this.initialInput.initialPositionY);
-
-    private minX = 0;
-    private maxX = this.initialInput.buildingWidth - 1;
-    private minY = 0;
-    private maxY = this.initialInput.buildingHeight - 1;
-
     protected parseInitialGameInput(): ShadowKnightEp1InitiaInput {
         const [buildingWidth, buildingHeight] = [...readline().split(' ').map(value => +value)];
         const availableJumps = parseInt(readline());
@@ -42,6 +35,12 @@ export class ShadowOfKnight1Solver extends PuzzleSolver<ShadowKnightEp1InitiaInp
         }
         return { bombDirection: stepwiseCGInput }
     }
+
+    private currentPosition = new Vector2(this.initialInput.initialPositionX, this.initialInput.initialPositionY);
+    private minX = 0;
+    private maxX = this.initialInput.buildingWidth - 1;
+    private minY = 0;
+    private maxY = this.initialInput.buildingHeight - 1;
 
     protected getSolutionForNextStep(stepwiseInput: ShadowKnightEp1StepwiseInput): string {
         PuzzleManager.log("bombDirection: " + stepwiseInput.bombDirection);
