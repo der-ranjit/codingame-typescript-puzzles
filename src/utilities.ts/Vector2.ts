@@ -1,5 +1,5 @@
 import { CGDirection, cgDirectionToVectorLike } from "./CGDirection";
-import { CGInput } from "./CGInputOutput";
+import { CGInputOutput } from "./CGInputOutput";
 import { isEnumValue } from "./enums";
 
 export interface Vector2Like {
@@ -20,9 +20,9 @@ function isVectorLikeCompatibleInput(value: any): value is string {
 
 export class Vector2 {
     public static from(vectorLike: Vector2Like): Vector2
-    public static from(input: CGInput): Vector2
+    public static from(input: CGInputOutput): Vector2
     public static from(direction: CGDirection): Vector2
-    public static from(value: Vector2Like | CGInput | CGDirection): Vector2 {
+    public static from(value: Vector2Like | CGInputOutput | CGDirection): Vector2 {
         if (isVector2Like(value)) {
             return new Vector2(value);
         } else if (isEnumValue(value, CGDirection)) {

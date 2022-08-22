@@ -1,2 +1,1 @@
-export type CGInput = number | string | boolean;
-export type CGOutput = string;
+export type CGInputOutput = string;

@@ -1,5 +1,5 @@
 import { CGDirection, vectorLikeToCGDirection } from "../../utilities.ts/CGDirection";
-import { CGInput } from "../../utilities.ts/CGInputOutput";
+import { CGInputOutput } from "../../utilities.ts/CGInputOutput";
 import { PuzzleSimulationArgs } from "../PuzzleSimulation";
 import { Vector2 } from "../../utilities.ts/Vector2";
 
@@ -14,13 +14,13 @@ export const shadowOfKnightEp1SimulationArgs: PuzzleSimulationArgs = {
     outputCalculator: createNextOutput,
     initialOutputs: [
         widthAndHeight.toString(),
-        availableJumps,
+        availableJumps.toString(),
         playerPosition.toString()
     ],
 };
 
 /** Output the direction of the bomb relative to the player position */
-function createNextOutput(targetWindow: CGInput | null): CGDirection {
+function createNextOutput(targetWindow: CGInputOutput | null): CGDirection {
     if (targetWindow === bombPosition.toString()) {
         winGame();
     } else if (targetWindow != null) {
@@ -34,7 +34,7 @@ function winGame() {
     throw new Error("YOU WON");
 }
 
-function movePlayerToTargetWindow(targetWindow: CGInput) {
+function movePlayerToTargetWindow(targetWindow: CGInputOutput) {
     playerPosition = Vector2.from(targetWindow);
     availableJumps--;
     if (availableJumps <= 0) {

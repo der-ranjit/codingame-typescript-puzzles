@@ -1,9 +1,8 @@
 import { CGDirection, isCGDirection } from "../../utilities.ts/CGDirection";
 import { Vector2, Vector2Like } from "../../utilities.ts/Vector2";
-import { PuzzleManager } from "../PuzzleManager";
-import { GameInput, PuzzleSolver } from "../PuzzleSolver";
+import { InitialGameInput, PuzzleSolver } from "../PuzzleSolver";
 
-interface ShadowKnightEp1GameInput extends GameInput {
+interface ShadowKnightEp1InitialGameInput extends InitialGameInput {
     readonly buildingWidth: number;
     readonly buildingHeight: number,
     readonly availableJumps: number;
@@ -11,7 +10,7 @@ interface ShadowKnightEp1GameInput extends GameInput {
     readonly initialPositionY: number;
 }
 
-export class ShadowKnightEp1Solution extends PuzzleSolver<ShadowKnightEp1GameInput> {
+export class ShadowKnightEp1Solution extends PuzzleSolver<ShadowKnightEp1InitialGameInput> {
     private currentPosition = new Vector2(this.gameInput.initialPositionX, this.gameInput.initialPositionY);
 
     private minX = 0;
@@ -19,7 +18,7 @@ export class ShadowKnightEp1Solution extends PuzzleSolver<ShadowKnightEp1GameInp
     private minY = 0;
     private maxY = this.gameInput.buildingHeight - 1;
 
-    protected initializeGameInput(): ShadowKnightEp1GameInput {
+    protected initializeGameInput(): ShadowKnightEp1InitialGameInput {
         const [buildingWidth, buildingHeight] = [...readline().split(' ').map(value => +value)];
         const availableJumps = parseInt(readline());
         const [initialPositionX, initialPositionY] = [...readline().split(' ').map(value => +value)];

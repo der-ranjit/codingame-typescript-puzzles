@@ -1,6 +1,6 @@
-import { GameInput, PuzzleSolver } from "../PuzzleSolver";
+import { InitialGameInput, PuzzleSolver } from "../PuzzleSolver";
 
-interface ExampleGameInput extends GameInput {
+interface ExampleGameInput extends InitialGameInput {
     readonly startValue: string;
 }
 

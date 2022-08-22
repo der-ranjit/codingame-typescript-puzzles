@@ -1,8 +1,7 @@
-import { CGInput, CGOutput } from "../utilities.ts/CGInputOutput";
-import { isNodeEnvironment } from "./PuzzleManager";
+import { CGInputOutput } from "../utilities.ts/CGInputOutput";
 
-type InitialOutputs = CGInput[];
-type OutputCalculator = (lastSolution: CGInput | null) => CGOutput;
+type InitialOutputs = CGInputOutput[];
+type OutputCalculator = (lastSolution: CGInputOutput | null) => CGInputOutput;
 
 export interface PuzzleSimulationArgs {
     /** An array of values that will initially be provided by the simulation on calls of readline */
@@ -21,8 +20,8 @@ export class PuzzleSimulation {
     private outputComputer: OutputCalculator;
     private simulationSpeed: number;
 
-    private lastInput: CGInput | null = null;
-    private outputGenerator: Generator<CGOutput> = this.generator();
+    private lastInput: CGInputOutput | null = null;
+    private outputGenerator: Generator<CGInputOutput> = this.generator();
 
     constructor(simulatorArgs: PuzzleSimulationArgs) {
         this.initialOutputs = simulatorArgs.initialOutputs;
@@ -35,11 +34,11 @@ export class PuzzleSimulation {
         return this.simulationSpeed;
     }
 
-    public getNextOutput(): CGOutput {
+    public getNextOutput(): CGInputOutput {
         return this.outputGenerator.next().value;
     }
 
-    private *generator(): Generator<CGOutput> {
+    private *generator(): Generator<CGInputOutput> {
         while (true) {
             let nextOutput = this.initialOutputs.shift();
             if (nextOutput === undefined) {
@@ -52,7 +51,7 @@ export class PuzzleSimulation {
     /**
      * Sets the last solution / input for simulation, which will be provided to the outputComputer method.
      */
-    public setSolution(input: CGInput) {
+    public setSolution(input: CGInputOutput) {
         this.lastInput = input;
     }
 }
