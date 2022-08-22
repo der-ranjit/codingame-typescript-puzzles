@@ -1,5 +1,4 @@
 import { isCGDirection } from "../../utilities.ts/CGDirection";
-import { getRandomInt } from "../../utilities.ts/rng";
 import { Vector2, Vector2Like } from "../../utilities.ts/Vector2";
 import { PuzzleManager } from "../PuzzleManager";
 import { GameInput, PuzzleSolver } from "../PuzzleSolver";
@@ -20,15 +19,10 @@ export class ShadowKnightEp1Solution extends PuzzleSolver<ShadowKnightEp1GameInp
     private minY = 0;
     private maxY = this.gameInput.buildingHeight - 1;
 
-
     protected initializeGameInput(): ShadowKnightEp1GameInput {
-        const buildingInput = readline().split(' ');
-        const buildingWidth = parseInt(buildingInput[0]);
-        const buildingHeight = parseInt(buildingInput[1]);
+        const [buildingWidth, buildingHeight] = [...readline().split(' ').map(value => +value)];
         const availableJumps = parseInt(readline());
-        const initialPositionInput = readline().split(' ');
-        const initialPositionX = parseInt(initialPositionInput[0]);
-        const initialPositionY = parseInt(initialPositionInput[1]);
+        const [initialPositionX, initialPositionY] = [...readline().split(' ').map(value => +value)];
         return {
             buildingWidth,
             buildingHeight,
@@ -81,6 +75,5 @@ export class ShadowKnightEp1Solution extends PuzzleSolver<ShadowKnightEp1GameInp
         const x = Math.ceil(this.minX + xDiff / 2);
         const y = Math.ceil(this.minY + yDiff / 2);
         return new Vector2(x, y);
-
     }
 }
