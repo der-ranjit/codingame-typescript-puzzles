@@ -1,0 +1,32 @@
+{
+	"Create PuzzleSolver": {
+		"scope": "typescript",
+		"prefix": "puzzlesolver",
+		"body": [
+			"import { InitialGameInput, PuzzleSolver, StepwiseGameInput } from \"../PuzzleSolver\";",
+			"",
+			"interface ${1:PUZZLE_NAME}InitialInput extends InitialGameInput {",
+			"",
+			"}",
+			"",
+			"interface ${1:PUZZLE_NAME}StepwiseInput extends StepwiseGameInput {",
+			"",
+			"}",
+			"",
+			"export class ${1:PUZZLE_NAME}Solver extends PuzzleSolver<${1:PUZZLE_NAME}InitialInput, ${1:PUZZLE_NAME}StepwiseInput> {",
+    		"    protected parseInitialGameInput(): ${1:PUZZLE_NAME}InitialInput {",
+			"        return {};",
+    		"    }",
+			"",
+    		"    protected parseStepwiseGameInput(stepwiseCGInput: string): ${1:PUZZLE_NAME}StepwiseInput {",
+			"        return {};",
+    		"    }",
+			"",
+    		"    protected getSolutionForNextStep(stepwiseInput: ${1:PUZZLE_NAME}StepwiseInput): string {",
+			"        return \"\";",
+			"    }",
+			"}"
+		],
+		"description": "Create new PuzzleSolver class"
+	}
+}
