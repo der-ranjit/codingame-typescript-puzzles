@@ -1,4 +1,4 @@
-import { isCGDirection } from "../../utilities.ts/CGDirection";
+import { CGDirection, isCGDirection } from "../../utilities.ts/CGDirection";
 import { Vector2, Vector2Like } from "../../utilities.ts/Vector2";
 import { PuzzleManager } from "../PuzzleManager";
 import { GameInput, PuzzleSolver } from "../PuzzleSolver";
@@ -33,17 +33,19 @@ export class ShadowKnightEp1Solution extends PuzzleSolver<ShadowKnightEp1GameInp
     }
 
     public handleNextInputAndReturnSolution(): string {
-        // the direction of the bombs from batman's current location (U, UR, R, DR, D, DL, L or UL)
         const bombCGDirection = readline();
         if (!isCGDirection(bombCGDirection)) {
-            throw new Error("erronous bomb direction provided")
+            throw new Error("malformed input")
         }
 
+        this.jump(bombCGDirection);
+        return this.currentPosition.toString();
+    }
+
+    // jump to a window based on bombDirection
+    private jump(bombCGDirection: CGDirection): void {
         const bombDirection = Vector2.from(bombCGDirection);
-        PuzzleManager.log("bomb direction: " + bombCGDirection);
-        const nextTarget = this.getNextTarget(bombDirection.getPosition());
-        this.currentPosition = nextTarget;
-        return nextTarget.toString();
+        this.currentPosition = this.getNextTarget(bombDirection.getPosition());
     }
 
     private getNextTarget(bombPosition: Vector2Like): Vector2 {
