@@ -9,7 +9,7 @@ interface ExampleStepwiseInput extends StepwiseGameInput {
     readonly vector: Vector2;
 }
 
-export class PuzzleExample extends PuzzleSolver<ExampleInitialInput, ExampleStepwiseInput> {
+export class ExamplePuzzleSolver extends PuzzleSolver<ExampleInitialInput, ExampleStepwiseInput> {
     protected parseInitialGameInput(): ExampleInitialInput {
         const startValue = readline();
         return { startValue };

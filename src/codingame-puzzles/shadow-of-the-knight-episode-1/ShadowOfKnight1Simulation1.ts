@@ -9,7 +9,7 @@ let availableJumps = 40;
 let playerPosition = new Vector2(2, 3);
 const bombPosition = new Vector2(1, 5);
 
-export const shadowOfKnightEp1SimulationArgs: PuzzleSimulationArgs = {
+export const shadowOfKnight1SimulationArgs: PuzzleSimulationArgs = {
     simulationsPerSecond: 2,
     outputCalculator: createNextOutput,
     initialOutputs: [

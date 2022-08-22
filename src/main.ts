@@ -2,7 +2,7 @@
 import { PuzzleManager } from "./codingame-puzzles/PuzzleManager";
 
 // import { PuzzleExample as Puzzle } from "./codingame-puzzles/_example/PuzzleExample";
-import { ShadowKnightEp1Solution as PuzzleSolver } from "./codingame-puzzles/shadow-of-the-knight-episode-1/solution";
-import { shadowOfKnightEp1SimulationArgs as simulationArgs } from "./codingame-puzzles/shadow-of-the-knight-episode-1/simulation";
+import { ShadowOfKnight1Solver as PuzzleSolver } from "./codingame-puzzles/shadow-of-the-knight-episode-1/ShadowOfKnight1Solver";
+import { shadowOfKnight1SimulationArgs as simulationArgs } from "./codingame-puzzles/shadow-of-the-knight-episode-1/ShadowOfKnight1Simulation1";
 
 PuzzleManager.start(PuzzleSolver, simulationArgs)
