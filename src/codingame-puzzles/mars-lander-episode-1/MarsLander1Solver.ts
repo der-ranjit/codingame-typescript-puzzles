@@ -12,6 +12,7 @@ export class MarsLander1Solver extends PuzzleSolver<MarsLander1InitialInput, Mar
     protected parseInitialGameInput(): MarsLander1InitialInput {
         return {};
         // gewa
+        //wqgq
     }
 
     protected parseStepwiseGameInput(stepwiseCGInput: string): MarsLander1StepwiseInput {
