@@ -8,3 +8,5 @@ import { MarsLander1Solver } from "./codingame-puzzles/mars-lander-episode-1/Mar
 
 PuzzleManager.start(ShadowOfKnight1Solver, ShadowOfKnight1Simulation1, { simulationsPerSecond: 2 })
 // PuzzleManager.start(MarsLander1Solver)
+
+// test kram für linda
