@@ -17,6 +17,8 @@ interface ShadowKnightEp1StepwiseInput extends StepwiseGameInput {
 }
 
 export class ShadowOfKnight1Solver extends PuzzleSolver<ShadowKnightEp1InitiaInput, ShadowKnightEp1StepwiseInput> {
+    protected stepwisePuzzle = true;
+
     protected parseInitialGameInput(): ShadowKnightEp1InitiaInput {
         const [buildingWidth, buildingHeight] = [...readline().split(' ').map(value => +value)];
         const availableJumps = parseInt(readline());

@@ -12,6 +12,9 @@ export interface StepwiseGameInput {
 export type PuzzleSolverConstructor<I extends InitialGameInput, S extends StepwiseGameInput = {}> = new (...args: any[]) => PuzzleSolver<I, S>;
 
 export abstract class PuzzleSolver<I extends InitialGameInput, S extends StepwiseGameInput = {}> {
+    /** determines whether this puzzle will be run in a loop, awaiting continuous input (default), or */
+    protected abstract stepwisePuzzle: boolean;
+
     /** is called once to parse initial game input provided by codingame puzzle (or simulation). will be saved in initialInput */
     protected abstract parseInitialGameInput(): I;
     /** is called once every step to parse step-wise input. will be available as a parameter to getSolutionForNextStep */
@@ -24,6 +27,10 @@ export abstract class PuzzleSolver<I extends InitialGameInput, S extends Stepwis
 
     constructor() {
         this.initialInput = this.parseInitialGameInput();
+    }
+
+    public isStepwisePuzzle(): boolean {
+        return this.stepwisePuzzle;
     }
 
     public getNextSolution(): CGInputOutput {

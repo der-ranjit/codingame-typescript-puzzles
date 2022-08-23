@@ -9,6 +9,8 @@ interface MarsLander1StepwiseInput extends StepwiseGameInput {
 }
 
 export class MarsLander1Solver extends PuzzleSolver<MarsLander1InitialInput, MarsLander1StepwiseInput> {
+    protected stepwisePuzzle = true;
+    
     protected parseInitialGameInput(): MarsLander1InitialInput {
         return {};
     }
@@ -18,6 +20,6 @@ export class MarsLander1Solver extends PuzzleSolver<MarsLander1InitialInput, Mar
     }
 
     protected getSolutionForNextStep(stepwiseInput: MarsLander1StepwiseInput): string {
-        return "";
+        return "solution";
     }
 }

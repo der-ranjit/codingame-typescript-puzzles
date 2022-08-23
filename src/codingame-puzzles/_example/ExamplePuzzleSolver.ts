@@ -10,6 +10,8 @@ interface ExampleStepwiseInput extends StepwiseGameInput {
 }
 
 export class ExamplePuzzleSolver extends PuzzleSolver<ExampleInitialInput, ExampleStepwiseInput> {
+    protected stepwisePuzzle = true;
+    
     protected parseInitialGameInput(): ExampleInitialInput {
         const startValue = readline();
         return { startValue };

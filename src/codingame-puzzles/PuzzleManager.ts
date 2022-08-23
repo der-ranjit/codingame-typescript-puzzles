@@ -30,9 +30,13 @@ export class PuzzleManager {
 
     private static solvePuzzleInCodingameIDE<T>(puzzleSolverType: PuzzleSolverConstructor<T>): void {
         const puzzleSolver = new puzzleSolverType();
-        while (true) {
-            // codingame expects a console.log as output for a solution 
-            console.log(puzzleSolver.getNextSolution());
+        if (puzzleSolver.isStepwisePuzzle()) {
+            while (true) {
+                // codingame expects a console.log as output for a solution 
+                console.log(puzzleSolver.getNextSolution());
+            }
+        } else {
+            console.log(puzzleSolver.getNextSolution())
         }
     }
 
@@ -47,16 +51,27 @@ export class PuzzleManager {
 
         // create puzzleSolver only after readline has been relayed, since constructing a solver will also parse initial game input
         const puzzleSolver = new puzzleSolverType();
-        while (true) {
+
+        if (puzzleSolver.isStepwisePuzzle()) {
+            while (true) {
+                const solution = puzzleSolver.getNextSolution();
+                simulation.setSolution(solution);
+                console.log(solution);
+                if (simulation.getIsStopped()) {
+                    console.log("Simulation stopped with message:");
+                    console.log(simulation.getStopMessage());
+                    break;
+                }
+                await sleep(simulation.getSimulationSpeed());
+            }
+        } else {
             const solution = puzzleSolver.getNextSolution();
             simulation.setSolution(solution);
             console.log(solution);
             if (simulation.getIsStopped()) {
                 console.log("Simulation stopped with message:");
                 console.log(simulation.getStopMessage());
-                break;
             }
-            await sleep(simulation.getSimulationSpeed());
         }
     }
 }
