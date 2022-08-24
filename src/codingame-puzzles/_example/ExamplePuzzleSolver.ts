@@ -1,11 +1,11 @@
 import { CGInputOutput } from "../../utilities.ts/CGInputOutput";
 import { Vector2 } from "../../utilities.ts/Vector2";
-import { InitialGameInput, PuzzleSolver, StepwiseGameInput } from "../PuzzleSolver";
+import { InitialPuzzleInput, PuzzleSolver, StepwisePuzzleInput } from "../PuzzleSolver";
 
-interface ExampleInitialInput extends InitialGameInput {
+interface ExampleInitialInput extends InitialPuzzleInput {
     readonly startValue: string;
 }
-interface ExampleStepwiseInput extends StepwiseGameInput {
+interface ExampleStepwiseInput extends StepwisePuzzleInput {
     readonly vector: Vector2;
 }
 

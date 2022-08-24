@@ -1,17 +1,17 @@
 import { CGInputOutput } from "../utilities.ts/CGInputOutput";
 
 // describes what the initial string inputs actually represents
-export interface InitialGameInput {
+export interface InitialPuzzleInput {
     readonly [key: string]: any;
 }
 // describes what the stepwise string input actually represents
-export interface StepwiseGameInput {
+export interface StepwisePuzzleInput {
     readonly [key: string]: any;
 }
 
-export type PuzzleSolverConstructor<I extends InitialGameInput, S extends StepwiseGameInput = {}> = new (...args: any[]) => PuzzleSolver<I, S>;
+export type PuzzleSolverConstructor<I extends InitialPuzzleInput, S extends StepwisePuzzleInput = {}> = new (...args: any[]) => PuzzleSolver<I, S>;
 
-export abstract class PuzzleSolver<I extends InitialGameInput, S extends StepwiseGameInput = {}> {
+export abstract class PuzzleSolver<I extends InitialPuzzleInput, S extends StepwisePuzzleInput = {}> {
     /** determines whether this puzzle will be run in a loop, awaiting continuous input (default), or */
     protected abstract stepwisePuzzle: boolean;
 

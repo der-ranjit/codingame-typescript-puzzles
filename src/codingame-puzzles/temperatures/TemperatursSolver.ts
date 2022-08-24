@@ -1,10 +1,10 @@
-import { InitialGameInput, PuzzleSolver, StepwiseGameInput } from "../PuzzleSolver";
+import { InitialPuzzleInput, PuzzleSolver, StepwisePuzzleInput } from "../PuzzleSolver";
 
-interface TemperaturesInitialInput extends InitialGameInput {
+interface TemperaturesInitialInput extends InitialPuzzleInput {
     numbers: number[];
 }
 
-interface TemperaturesStepwiseInput extends StepwiseGameInput {
+interface TemperaturesStepwiseInput extends StepwisePuzzleInput {
 
 }
 

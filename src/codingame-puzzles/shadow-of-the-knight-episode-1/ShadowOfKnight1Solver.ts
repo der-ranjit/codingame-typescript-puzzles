@@ -2,9 +2,9 @@ import { assert } from "../../utilities.ts/asserts";
 import { CGDirection, isCGDirection } from "../../utilities.ts/CGDirection";
 import { Vector2, Vector2Like } from "../../utilities.ts/Vector2";
 import { PuzzleManager } from "../PuzzleManager";
-import { InitialGameInput, PuzzleSolver, StepwiseGameInput } from "../PuzzleSolver";
+import { InitialPuzzleInput, PuzzleSolver, StepwisePuzzleInput } from "../PuzzleSolver";
 
-interface ShadowKnightEp1InitiaInput extends InitialGameInput {
+interface ShadowKnightEp1InitiaInput extends InitialPuzzleInput {
     readonly buildingWidth: number;
     readonly buildingHeight: number,
     readonly availableJumps: number;
@@ -12,7 +12,7 @@ interface ShadowKnightEp1InitiaInput extends InitialGameInput {
     readonly initialPositionY: number;
 }
 
-interface ShadowKnightEp1StepwiseInput extends StepwiseGameInput {
+interface ShadowKnightEp1StepwiseInput extends StepwisePuzzleInput {
     bombDirection: CGDirection;
 }
 
