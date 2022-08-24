@@ -12,10 +12,11 @@ function isVector2Like(value: any): value is Vector2Like {
 }
 
 function isVectorLikeCompatibleInput(value: any): value is string {
-    return typeof value === "string"
-        && value.length === 3
-        && !isNaN(parseInt(value[0]))
-        && !isNaN(parseInt(value[2]))
+    if (typeof value !== "string") {
+        return false;
+    }
+    let split = value.split(" ");
+    return split.length === 2 && !isNaN(parseInt(split[0])) && !isNaN(parseInt(split[1]))
 }
 
 export class Vector2 {
@@ -28,7 +29,8 @@ export class Vector2 {
         } else if (isEnumValue(value, CGDirection)) {
             return Vector2.from(cgDirectionToVectorLike(value));
         } else if (isVectorLikeCompatibleInput(value)) {
-            return new Vector2(parseInt(value[0]), parseInt(value[2]));
+            const split = value.split(" ");
+            return new Vector2(parseInt(split[0]), parseInt(split[1]));
         } else {
             throw new Error("[Vector2.from]: Could not convert " + value + " to Vector2")
         };
