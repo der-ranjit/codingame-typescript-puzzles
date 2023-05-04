@@ -2,11 +2,11 @@ import { clamp } from "../../utilities.ts/math";
 import { Vector2 } from "../../utilities.ts/Vector2";
 import { InitialPuzzleInput, PuzzleSolver, StepwisePuzzleInput } from "../PuzzleSolver";
 
-interface MarsLander1InitialInput extends InitialPuzzleInput {
+interface MarsLander2InitialInput extends InitialPuzzleInput {
     surfacePoints: Vector2[];
 }
 
-interface MarsLander1StepwiseInput extends StepwisePuzzleInput {
+interface MarsLander2StepwiseInput extends StepwisePuzzleInput {
     vehiclePosition: Vector2;
     velocity: Vector2;
     // 0 <= remainingFuel <= 2000
@@ -25,7 +25,7 @@ const MAX_VELOCITY = new Vector2(20, 40);
 const MAX_POWER = 4;
 const GRAVITY = 3.711;
 
-function parseInitialGameInput(): MarsLander1InitialInput {
+function parseInitialGameInput(): MarsLander2InitialInput {
     const surfacePoints: Vector2[] = [];
     let numberOfSurfacePoints = parseInt(readline());
     for (let i = 0; i < numberOfSurfacePoints; i++) {
@@ -34,7 +34,7 @@ function parseInitialGameInput(): MarsLander1InitialInput {
     return { surfacePoints };
 }
 
-function parseStepwiseGameInput(stepwiseCGInput: string): MarsLander1StepwiseInput {
+function parseStepwiseGameInput(stepwiseCGInput: string): MarsLander2StepwiseInput {
     const inputArray = stepwiseCGInput.split(" ").map(value => parseInt(value));
     return {
         vehiclePosition: Vector2.from({ x: inputArray[0], y: inputArray[1] }),
@@ -45,23 +45,23 @@ function parseStepwiseGameInput(stepwiseCGInput: string): MarsLander1StepwiseInp
     };
 }
 
-export class MarsLander1Solver extends PuzzleSolver<MarsLander1InitialInput, MarsLander1StepwiseInput> {
+export class MarsLander2Solver extends PuzzleSolver<MarsLander2InitialInput, MarsLander2StepwiseInput> {
     protected stepwisePuzzle = true;
-    protected parseInitialGameInput(): MarsLander1InitialInput {
+    protected parseInitialGameInput(): MarsLander2InitialInput {
         return parseInitialGameInput();
     }
-    protected parseStepwiseGameInput(stepwiseCGInput: string): MarsLander1StepwiseInput {
+    protected parseStepwiseGameInput(stepwiseCGInput: string): MarsLander2StepwiseInput {
         return parseStepwiseGameInput(stepwiseCGInput);
     }
 
     private landingSurface = this.findSurface();
     private fullStopActivated = false;
 
-    protected getSolutionForNextStep(stepwiseInput: MarsLander1StepwiseInput): string {
+    protected getSolutionForNextStep(stepwiseInput: MarsLander2StepwiseInput): string {
         return "0 " + this.slowdownWhenCriticalStrategy(stepwiseInput);
     }
 
-    private slowdownWhenCriticalStrategy(stepwiseInput: MarsLander1StepwiseInput): number {
+    private slowdownWhenCriticalStrategy(stepwiseInput: MarsLander2StepwiseInput): number {
         const distanceToSurface = Math.abs(Vector2.sub(stepwiseInput.vehiclePosition, this.landingSurface.start).getY());
         const criticalDistance = this.getCriticialSlowdownHeightDistance(stepwiseInput);
         if (!this.fullStopActivated && distanceToSurface <= criticalDistance) {
@@ -72,9 +72,9 @@ export class MarsLander1Solver extends PuzzleSolver<MarsLander1InitialInput, Mar
 
     /**
      * Returns the minimum height  distance needed to slow the rover to -MAX_VELOCITY.y (falling),
-     * assuming the rover will break with maximum power
+     * assuming the rover will brake with maximum power
      */
-    private getCriticialSlowdownHeightDistance(stepwiseInput: MarsLander1StepwiseInput): number {
+    private getCriticialSlowdownHeightDistance(stepwiseInput: MarsLander2StepwiseInput): number {
         const currentVelocity = stepwiseInput.velocity.getY();
         // only consider falling
         if (currentVelocity >= 0) {
